@@ -34,9 +34,29 @@ if 'user_state' not in st.session_state:
     st.session_state.user_state = "start"
 
 def main():
-    st.title("Pan - Your Sustainability Expert")
+    st.title("Pan - Your SMART Sustainability Expert")
 
-    st.markdown("Using OpenAI, we cross-reference a given Global Reporting Index (GRI) report with specific standards from SustainableIT to determine measurable goals and impact.")
+    st.markdown("""
+    Using OpenAI, we cross-reference a given Global Reporting Index (GRI) report with specific standards from SustainableIT to determine measurable goals and impact. The goal is less to identify a specific goal but rather ensure these goals are actually SMART (Specific, Measureable, Achievable, Relevant, and Time-Bound).
+    """)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("The assistant created for this purpose, Pan, is focused on cross-reference and identifying specific components of goals listed to determine efficacy. Pan acts as a guide rather than a dictator, advising on where a user might improve the wording. As you can imagine, Pan is a reference to the Greek God of the same name, who acts to a certain extent like the bridge between humans and nature.")
+    with col2:
+        st.image("./static/pan.png")
+
+    st.markdown("""
+    A user might use a tool like this to evaluate a companies progress towards specified goals. A company might also self-asses in order to fine-tune their content to provide the best information regarding their initiatives, assuming they aren't incentivized to be vague.
+                
+    Built for the AI Policy Hackathon on the AI in Sustainability Track, Technical Focus.
+                
+    Created by Andres Sepulveda Morales (andres@redmage.cc)
+    """)
+
+    with st.expander("More on the SustainableIT Standards"):
+        st.markdown("You can see a full list of standards at [sustainableit.org.](https://www.sustainableit.org/standards/it-esg-standards)")
+        st.write(AVAILABLE_STANDARDS)
 
     if 'file_upload_disabled' not in st.session_state:
         st.session_state.file_upload_disabled = False
@@ -121,7 +141,8 @@ def update_state_to_query_model():
     st.session_state.user_state = "query_model"
 
 def write_to_chat(type, content):
-    with st.chat_message(type):
+    avatar_path = "./static/pan.png" if type == "assistant" else None
+    with st.chat_message(type, avatar=avatar_path ):
         st.write(content)
 
 @st.dialog("Conclusion")
